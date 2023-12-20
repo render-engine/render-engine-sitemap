@@ -1,3 +1,3 @@
-from .plugin import class Renderenginesitemap
+from .plugin import SiteMap
 
-__all__ = ["class Renderenginesitemap"]
+__all__ = ["SiteMap"]

@@ -1,12 +1,11 @@
 import logging
 import pathlib
-import typing
-from jinja2.loaders import PackageLoader
 
+from jinja2.loaders import PackageLoader
 from render_engine.plugins import hook_impl
 
-class SiteMap:
 
+class SiteMap:
     default_settings = {
         "output_path": "sitemap.xml",
         "map_item_pattern": "*.html",
@@ -18,11 +17,11 @@ class SiteMap:
         site,
     ) -> None:
         """Add the SiteMap template path to the theme manager."""
-        site.theme_manager.prefix['SiteMap'] = PackageLoader(
+        site.theme_manager.prefix["SiteMap"] = PackageLoader(
             "render_engine_sitemap",
             "templates",
         )
-    
+
     @hook_impl
     def post_build_site(
         self,
@@ -37,14 +36,11 @@ class SiteMap:
         plugin_settings = site.plugin_manager.plugin_settings["SiteMap"]
         logging.debug(
             f"Generating sitemap - {plugin_settings['output_path']} \
-                from files matching - {plugin_settings['map_item_pattern']}")
-        template = engine.get_template("sitemap.xml")
-        site_map_items = pathlib.Path(site.output_path).rglob(
-            plugin_settings["map_item_pattern"]
+                from files matching - {plugin_settings['map_item_pattern']}"
         )
-        sitemap_path = pathlib.Path(site.output_path).joinpath(
-            plugin_settings["output_path"]
-        )
+        template = site.theme_manager.engine.get_template("sitemap.xml")
+        site_map_items = pathlib.Path(site.output_path).rglob(plugin_settings["map_item_pattern"])
+        sitemap_path = pathlib.Path(site.output_path).joinpath(plugin_settings["output_path"])
         sitemap_path.write_text(
             template.render(
                 items=[item.relative_to(site.output_path) for item in site_map_items],
