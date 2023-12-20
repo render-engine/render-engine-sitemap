@@ -6,7 +6,6 @@ on:
 
 jobs:
   deploy:
-    needs: test
     name: Deploy to PyPI
     runs-on: ubuntu-latest
     steps:
@@ -28,4 +27,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: ${{ secrets.TWINE_PASSWORD}}
+          password: ${{secrets.TWINE_PASSWORD}}
