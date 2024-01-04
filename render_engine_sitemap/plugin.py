@@ -13,10 +13,19 @@ class SiteMap:
 
     @hook_impl
     def pre_build_site(
-        self,
         site,
+        settings: dict[str, any], 
     ) -> None:
-        """Add the SiteMap template path to the theme manager."""
+        """
+        Add the SiteMap template path to the theme manager.
+
+        @hook_spec
+        def pre_build_site(
+            self,
+            site,
+            settings: dict[str, typing.Any],
+        ) -> None:
+        """
         site.theme_manager.prefix["SiteMap"] = PackageLoader(
             "render_engine_sitemap",
             "templates",
@@ -24,7 +33,6 @@ class SiteMap:
 
     @hook_impl
     def post_build_site(
-        self,
         site,
     ) -> None:
         """
